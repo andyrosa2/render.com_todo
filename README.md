@@ -42,5 +42,35 @@ A barebones, Google Account password-protected todo application using Node.js, E
 5.  **Open**:
     Visit `http://localhost:3000`.
 
-## Deployment
-Ready for deployment to cloud providers like Render, Railway, or Heroku. Just set the environment variables in your dashboard.
+## Deployment (Render.com)
+
+The easiest way to deploy this app is using **Render**.
+
+1.  **Push to GitHub**:
+    Create a new repository on GitHub and push your code:
+    ```bash
+    git remote add origin https://github.com/YOUR_USERNAME/cloud-todo.git
+    git branch -M main
+    git push -u origin main
+    ```
+
+2.  **Deploy on Render**:
+    *   Sign up/Log in to [Render.com](https://render.com).
+    *   Click **"New +"** and select **"Blueprint"**.
+    *   Connect your GitHub account and select the `cloud-todo` repository.
+    *   Render will automatically detect the `render.yaml` file.
+    *   Click **"Apply"**.
+
+3.  **Configure Secrets**:
+    *   Once the service is created, go to your **Dashboard**.
+    *   Select the `cloud-todo` service.
+    *   Go to **"Environment"**.
+    *   You need to manually add your Google OAuth credentials:
+        *   `GOOGLE_CLIENT_ID`: Your Google Client ID.
+        *   `GOOGLE_CLIENT_SECRET`: Your Google Client Secret.
+    *   *Note: The `DATABASE_URL` and `SESSION_SECRET` are handled automatically by the Blueprint.*
+
+4.  **Google Cloud Console**:
+    *   Don't forget to update your Google Cloud Console "Authorized redirect URIs" to include your new Render URL:
+        *   `https://your-app-name.onrender.com/auth/google/callback`
+
