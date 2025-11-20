@@ -27,9 +27,28 @@
       </ul>
     </main>
 
+    <div id="setup-prompt" style="display: none;">
+      <p>First time setup: Choose your admin password.</p>
+      <form id="setup-form" style="display: flex; flex-direction: column; gap: 10px; align-items: center; margin-top: 1rem;">
+        <input type="password" id="setup-password-input" placeholder="Choose password (min 14 chars)" required
+          style="padding: 8px; border: 1px solid #ddd; border-radius: 4px; width: 250px;">
+        <button type="submit"
+          style="padding: 8px 16px; background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; width: 268px;">Set Password</button>
+      </form>
+      <p id="setup-error" style="color: red; display: none; margin-top: 0.5rem;"></p>
+    </div>
+
     <div id="login-prompt" style="display: none;">
-      <p>Sign in to manage your todos.</p>
-      <a href="/auth/google" class="btn-login">Sign in with Google</a>
+      <p>Enter credentials to access todos.</p>
+      <form id="login-form" style="display: flex; flex-direction: column; gap: 10px; align-items: center; margin-top: 1rem;">
+        <input type="text" id="username-input" placeholder="Username" required
+          style="padding: 8px; border: 1px solid #ddd; border-radius: 4px; width: 200px;">
+        <input type="password" id="password-input" placeholder="Password" required
+          style="padding: 8px; border: 1px solid #ddd; border-radius: 4px; width: 200px;">
+        <button type="submit"
+          style="padding: 8px 16px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; width: 218px;">Login</button>
+      </form>
+      <p id="login-error" style="color: red; display: none; margin-top: 0.5rem;"></p>
     </div>
   </div>
   <script src="script.js"></script>

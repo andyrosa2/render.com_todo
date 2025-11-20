@@ -1,7 +1,7 @@
 {
   "name": "cloud_todo",
   "version": "1.0.0",
-  "description": "Barebones google account password-protected postgresql database node todo application with a single field 'todo'. completed by deleting the todo item.",
+  "description": "Barebones username/password-protected postgresql database node todo application with a single field 'todo'. completed by deleting the todo item.",
   "main": "script.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -13,8 +13,6 @@
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
     "express-session": "^1.18.2",
-    "passport": "^0.7.0",
-    "passport-google-oauth20": "^2.0.0",
     "pg": "^8.16.3"
   }
 }
