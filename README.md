@@ -5,6 +5,24 @@ It allows you to add a new note to a list of notes.
 
 This was a test for Lee as where to host stuff.
 
+Render Glossary:
+Workspace: Your top-level Render container for resources, members, billing, and settings. Can be hobby, pro,org,enterprise.
+Project: A logical container that groups one or more environments (often prod/staging/dev). Free can only have one project.
+Environment: A named grouping inside a project that contains specific resources that belong together.
+Resource: Any managed thing in Render (service, database, key value, env var group, etc.).
+Service: A runnable app component Render builds and runs (web service, static site, worker, cron, private service).
+Web service: A public HTTP service (gets an onrender.com URL and can have custom domains).
+Static site: A CDN-hosted site that serves built static files; not a long-running server process.
+Datastore: A managed data service (e.g., Render Postgres, Render Key Value).
+Postgres instance: A managed PostgreSQL service on Render; it contains a database name, user, password, host, and port.
+Blueprint: Infrastructure-as-code for Render; a render.yaml file that declares desired resources and configuration.
+Apply (Blueprint): The action that creates/updates resources to match what render.yaml declares.
+Sync (Blueprint): Render’s ongoing process of reconciling real resources with the Blueprint definition.
+Environment variable: A key/value pair provided to a service at runtime (e.g., DATABASE_URL).
+fromDatabase connectionString: A Blueprint reference that sets an env var from a Postgres instance’s private-network connection URL.
+Region: The physical/geo location where a resource runs; private hostnames typically resolve only within the same region.
+Plan / instance type: The size/price tier of a service or datastore (free, starter, etc.).
+
 Database:
 - This app talks to Postgres through the `DATABASE_URL` environment variable.
 - Locally, `start-local.ps1` points `DATABASE_URL` at a local Postgres database named `cloud_todo`.
@@ -18,6 +36,12 @@ Render Free tier behavior (FYI):
 	- The next request has a noticeable cold-start delay (can take up to ~1 minute to boot).
 - Free web services also have monthly Free instance-hour limits; if you use them up, Render suspends the service until the start of the next month.
 - Render can also suspend Free services if you exceed included bandwidth without a payment method on file.
+
+Dashboard grouping note (how this is set up right now):
+- The frontend/web app service shows up inside a Project/Environment.
+- The Postgres database (and a Key Value instance) show up under Ungrouped Services (not inside the Project).
+- This is just organizational in the dashboard: the resources still exist and can still be linked via env vars; being ungrouped does not by itself prevent connections.
+- If you want everything grouped together, that requires explicitly assigning the datastores to the Project/Environment (either via the dashboard UI if available, or by defining projects/environments in render.yaml and re-applying the Blueprint).
 
 Troubleshooting (Render):
 - `getaddrinfo ENOTFOUND dpg-...` at startup means Node can’t resolve the Postgres hostname in `DATABASE_URL`.
