@@ -8,9 +8,11 @@ Origin:
 	This was a test for Lee as where to host stuff.
 - Gemini: [IT-80804 - cloud hosts](http://gemini.digitalforces.com/Gemini/issue/ViewIssue.aspx?id=80804&PROJID=2)
 - Spreadsheet: [Cloud Hosts spreadsheet](https://docs.google.com/spreadsheets/d/1FioWo5rhkhB_Fcc-FQ7ZKjIHSIQVFgm1JHfnBwNFb6w/edit?gid=1847581680#gid=1847581680)
+- GitHub: https://github.com/andyrosa2/render.com_todo
 
 Render Glossary:
 Workspace: Your top-level Render container for resources, members, billing, and settings. Can be hobby, pro,org,enterprise.
+Blueprint: Infrastructure-as-code for Render; a render.yaml file that declares desired resources and configuration. Points to github repo and branch to deploy from. Applying the Blueprint creates/updates resources to match the declaration.
 Project: A logical container that groups one or more environments (often prod/staging/dev). Free can only have one project.
 Environment: A named grouping inside a project that contains specific resources that belong together.
 Resource: Any managed thing in Render (service, database, key value, env var group, etc.).
@@ -19,7 +21,6 @@ Web service: A public HTTP service (gets an onrender.com URL and can have custom
 Static site: A CDN-hosted site that serves built static files; not a long-running server process.
 Datastore: A managed data service (e.g., Render Postgres, Render Key Value).
 Postgres instance: A managed PostgreSQL service on Render; it contains a database name, user, password, host, and port.
-Blueprint: Infrastructure-as-code for Render; a render.yaml file that declares desired resources and configuration.
 Apply (Blueprint): The action that creates/updates resources to match what render.yaml declares.
 Sync (Blueprint): Render’s ongoing process of reconciling real resources with the Blueprint definition.
 Environment variable: A key/value pair provided to a service at runtime (e.g., DATABASE_URL).
@@ -59,6 +60,14 @@ Troubleshooting (Render):
 		- The service region and database region match.
 	- Typical fix: recreate the DB (or let the Blueprint recreate it), then re-link `DATABASE_URL` to the correct database connection string.
 
+- **Sync Error: "id is empty id is empty"** after renaming the GitHub repo:
+	- This happens because the Blueprint loses its internal mapping between the YAML definition and the actual provisioned resources when the repo identity changes.
+	- Render Blueprints are tied to a specific repo URL; renaming the repo can break that link.
+	- Fixes (try in order):
+		1. Go to the Blueprint's **Settings** in the Render dashboard and update the connected repository to the new repo name/URL.
+		2. If that doesn't work, delete the old Blueprint instance, then create a new Blueprint pointing to the renamed repo and **Apply** it. (You may need to delete existing services/databases first to avoid name conflicts.)
+	- After re-creating via Blueprint, verify that `DATABASE_URL` is correctly wired to the new Postgres instance.
+
 Local Development:
 Requires a local Postgres database named `cloud_todo` and a local `DATABASE_URL` like:
 `postgresql://postgres:postgres@localhost:5432/cloud_todo`
@@ -73,10 +82,13 @@ Push to github
 Create Render account at [render.com](https://render.com) 
 connect your GitHub account
 
-From Render dashboard:
+From [dashboard](https://dashboard.render.com/):
 - Click **New +** → **Blueprint**
 - Select repository: `andyrosa2/render.com_todo`
 - Click **Apply**
 
 Launch:
 https://cloud-todo-i6a7.onrender.com
+
+**Important Conclusion: Render is unfriendly.**
+Render's developer experience is poor. Simple operations like renaming a repo break Blueprints with cryptic errors ("id is empty"). The dashboard organization is confusing (resources end up ungrouped for no obvious reason). Troubleshooting requires guesswork — error messages are unhelpful.
