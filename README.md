@@ -3,7 +3,11 @@ Node.js, Express, PostgreSQL.
 No css.
 It allows you to add a new note to a list of notes.
 
-This was a test for Lee as where to host stuff.
+
+Origin:
+	This was a test for Lee as where to host stuff.
+- Gemini: [IT-80804 - cloud hosts](http://gemini.digitalforces.com/Gemini/issue/ViewIssue.aspx?id=80804&PROJID=2)
+- Spreadsheet: [Cloud Hosts spreadsheet](https://docs.google.com/spreadsheets/d/1FioWo5rhkhB_Fcc-FQ7ZKjIHSIQVFgm1JHfnBwNFb6w/edit?gid=1847581680#gid=1847581680)
 
 Render Glossary:
 Workspace: Your top-level Render container for resources, members, billing, and settings. Can be hobby, pro,org,enterprise.
@@ -71,7 +75,7 @@ connect your GitHub account
 
 From Render dashboard:
 - Click **New +** → **Blueprint**
-- Select repository: `andyrosa2/antigravity-todo-test`
+- Select repository: `andyrosa2/render.com_todo`
 - Click **Apply**
 
 Launch:
